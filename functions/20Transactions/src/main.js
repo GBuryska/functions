@@ -1,4 +1,4 @@
-import { Client, Users } from 'node-appwrite';
+import { Client, Databases } from 'node-appwrite';
 
 // This Appwrite function will be executed every time your function is triggered
 export default async ({ req, res, log, error }) => {
@@ -8,28 +8,27 @@ export default async ({ req, res, log, error }) => {
     .setEndpoint(process.env.APPWRITE_FUNCTION_API_ENDPOINT)
     .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
     .setKey(req.headers['x-appwrite-key'] ?? '');
-  const users = new Users(client);
+  const databases = new Databases(client);
 
   try {
-    const response = await users.list();
-    // Log messages and errors to the Appwrite Console
-    // These logs won't be seen by your end users
-    log(`Total users: ${response.total}`);
+    const { customerId } = JSON.parse(req.body);
+
+    if (!customerId) {
+      return res.json({ error: 'customer ID is required' }, 400);
+    }
+
+    const transactions = await databases.listDocuments(
+      '67e04d26003294165c25',
+      '67e04d2f0004159d8c8a',
+      [
+        Query.equal('customer_id', customerId),
+        Query.limit(20)
+      ]
+    );
+
+    return res.json(transactions);
   } catch(err) {
-    error("Could not list users: " + err.message);
+    console.error("Error fetching transactions", error);
+    return res.json({ error: error.message }, 500);
   }
-
-  // The req object contains the request data
-  if (req.path === "/ping") {
-    // Use res object to respond with text(), json(), or binary()
-    // Don't forget to return a response!
-    return res.text("Pong");
-  }
-
-  return res.json({
-    motto: "Build like a team of hundreds_",
-    learn: "https://appwrite.io/docs",
-    connect: "https://appwrite.io/discord",
-    getInspired: "https://builtwith.appwrite.io",
-  });
 };
