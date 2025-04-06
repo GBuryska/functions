@@ -20,16 +20,9 @@ export default async ({ req, res, log, error }) => {
       return res.text({ error: 'customer ID is required' }, 400);
     }
 
-    const transactions = await databases.listDocuments(
-      '67e04d26003294165c25',
-      '67e04d2f0004159d8c8a',
-      [
-        Query.equal('customer_id', '67e021dc00252439e790'),
-        Query.limit(20)
-      ]
-    );
+    
 
-    return res.text(transactions);
+    return res.text('hello');
   } catch(err) {
     log("hi");
     error("Error fetching transactions", error);
