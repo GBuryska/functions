@@ -14,7 +14,7 @@ export default async ({ req, res, log, error }) => {
     const { customerId } = JSON.parse(req.body);
 
     if (!customerId) {
-      return res.json({ error: 'customer ID is required' }, 400);
+      return res.text({ error: 'customer ID is required' }, 400);
     }
 
     const transactions = await databases.listDocuments(
@@ -26,9 +26,9 @@ export default async ({ req, res, log, error }) => {
       ]
     );
 
-    return res.json(transactions);
+    return res.text(transactions);
   } catch(err) {
     console.error("Error fetching transactions", error);
-    return res.json({ error: error.message }, 500);
+    return res.text({ error: error.message }, 500);
   }
 };
