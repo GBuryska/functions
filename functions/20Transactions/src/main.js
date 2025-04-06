@@ -28,7 +28,7 @@ export default async ({ req, res, log, error }) => {
 
     return res.json(transactions);
   } catch(err) {
-    console.error("Error fetching transactions", error);
+    context.error("Error fetching transactions", error);
     return res.json({ error: error.message }, 500);
   }
 };
