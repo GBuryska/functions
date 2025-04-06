@@ -13,7 +13,7 @@ export default async ({ req, res, log, error }) => {
   try {
     const { customerId } = JSON.parse(req.body);
 
-    log(customerId);
+    context.log(customerId);
 
     if (!customerId) {
       return res.text({ error: 'customer ID is required' }, 400);
