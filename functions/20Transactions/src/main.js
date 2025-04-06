@@ -13,6 +13,7 @@ export default async ({ req, res, log, error }) => {
   const databases = new Databases(client);
   log('hello');
   try {
+    log(req.body);
     const { customerId } = JSON.parse(req.body);
 
     if (!customerId) {
