@@ -13,8 +13,6 @@ export default async ({ req, res, log, error }) => {
   try {
     const { customerId } = JSON.parse(req.body);
 
-    context.log(customerId);
-
     if (!customerId) {
       return res.text({ error: 'customer ID is required' }, 400);
     }
@@ -30,6 +28,7 @@ export default async ({ req, res, log, error }) => {
 
     return res.text(transactions);
   } catch(err) {
+    log("hi");
     error("Error fetching transactions", error);
     return res.text({ error: error.message }, 500);
   }
