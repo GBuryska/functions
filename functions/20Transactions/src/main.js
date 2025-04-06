@@ -18,7 +18,6 @@ import { Client, Databases } from 'node-appwrite';
        '67e04d26003294165c25',
        '67e04d2f0004159d8c8a',
        [
-         Query.equal('customer_id', req.body),
          Query.limit(20)
        ]
      );
