@@ -13,18 +13,12 @@ import { Client, Databases } from 'node-appwrite';
    const databases = new Databases(client);
    log('hello');
    try {
-     log(req.body);
-     const customerId = JSON.stringify(JSON.parse(req.body));
-     log(customerId);
-     if (!customerId) {
-       return res.text({ error: 'customer ID is required' }, 400);
-     }
      log('hellllp');
      const transactions = await databases.listDocuments(
        '67e04d26003294165c25',
        '67e04d2f0004159d8c8a',
        [
-         Query.equal('customer_id', customerID),
+         Query.equal('customer_id', req.body),
          Query.limit(20)
        ]
      );
