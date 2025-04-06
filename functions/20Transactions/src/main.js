@@ -23,7 +23,7 @@ export default async ({ req, res, log, error }) => {
       '67e04d26003294165c25',
       '67e04d2f0004159d8c8a',
       [
-        Query.equal(customerId, 'customer_id'),
+        Query.equal('customer_id', customerID),
         Query.limit(20)
       ]
     );
